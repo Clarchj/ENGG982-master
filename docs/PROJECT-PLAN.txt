@@ -1,0 +1,181 @@
+PROJECT PLAN
+Team 3 | The AM Network | AI in a mining operation
+Exported Thu, 1 Oct 2026, 12:44 pm
+================================================================
+
+PURPOSE
+-------
+Deliver a final report (30%), a final presentation (10%) and evidence of individual contribution (15%) that answer The AM Network's brief on applying AI within a mining operation in a Papua New Guinea context. Target for every member: High Distinction.
+
+PROJECT OVERVIEW
+----------------
+Six members, six business functions: Project Delivery (Long), Mine Planning (Anisha), Mine Operations (Manoj), Processing (Santosh), Asset Management (Yupeng), Health, Safety and Community (Aryaman). Each specialist owns the evidence for their function. Long leads and is Chief Editor.
+
+This hub holds structure, sources, tasks and evidence. Drafting and editing happen in Word on OneDrive.
+
+POLICIES
+--------
+Team Charter V1_2 and Rules of Engagement V1_2 apply.
+
+AI may support research, structure and language. It may not produce final engineering decisions, calculations, evaluations, references or conclusions without verification, and anything AI-derived needs a traditional source. All tools used go in the digital tool acknowledgment.
+
+Files are named TX_DocumentName_VX_X. Submissions follow Marston_Tuesday_1530_Team3_descriptor. Actions are numbered Year-Meeting-Action, for example 2026-5-3.
+
+PROJECT OBJECTIVES
+------------------
+1. Cover every body section (1 to 9), conclusion, references, tool acknowledgment and appendices to the page limits.
+2. Show clearly why the recommended solution beats the alternatives, on cost and other named metrics.
+3. Every section written by one person and edited by another, with both named.
+4. One voice across the whole report.
+5. Contribution logged weekly by every member, so the evidence is real and the ratings fair.
+
+SCOPE
+-----
+In: final report, final presentation, Milestone 3 minutes, contribution evidence.
+
+Out: client contact beyond what the tutor arranges, and any document formatting that Word does better than this hub.
+
+ESTIMATED TIMEFRAME
+-------------------
+1 Oct to 27 Oct 2026.
+
+Recess (to 4 Oct): outline locked and owners set. Week 10: drafts complete. Week 11: cross-editing and quality assurance. Week 12: freeze, single-voice passes, appendices, submit by Fri 23 Oct 11:30pm. Week 13: final presentation Tue 27 Oct.
+
+COMMUNICATIONS
+--------------
+Weekly team meeting Tuesday 21:00 (AEST) on Zoom. Long chairs, the note-taker rotates, agenda before and minutes after. Check the time after daylight saving starts on 4 Oct.
+
+Day-to-day in the team chat. Status lives in this hub. Questions on marking go to tutor Kevin Marston.
+
+SUPPORTING STAKEHOLDERS
+-----------------------
+Industry host: The AM Network. Tutor: Kevin Marston. Subject coordinator: Dr Nidhal Odeh. UOW Library and Learning Co-op for referencing and writing help.
+
+CHANGE MANAGEMENT
+-----------------
+A change to scope, structure, owners or dates is raised at the Tuesday meeting or in the chat, recorded in the minutes with an action number, and then updated here by Long. Anything that departs from the agreed team roles is written up for the appendix on actual contribution.
+
+FUTURE DIRECTION
+----------------
+After submission: export a backup from this hub, write the reflection, and keep the section structure as a template for the next team project.
+
+MILESTONE CHART
+---------------
+- Fri, 9 Oct, 11:55 pm  Milestone 3: minutes for weeks 7 to 9
+    One combined document. If missing, the report loses 10%.
+- Fri, 9 Oct, 11:59 pm  All report drafts complete
+    Week 10 target in the subject plan.
+- Fri, 16 Oct, 11:59 pm  Cross-editing done
+    Every section edited by someone who did not write it.
+- Mon, 19 Oct, 9:00 am  Content freeze
+    Edits only, no new content.
+- Thu, 22 Oct, 8:00 pm  Internal report submission
+    One day of slack.
+- Fri, 23 Oct, 11:30 pm  Final report due
+    30% of the subject. Late penalty: outline says 5% a day, the brief slides say 20%. Confirm on Moodle.
+- Mon, 26 Oct, 8:00 pm  Final slides ready to upload
+    Moodle cut-off is 11:30pm Tuesday. Project manager uploads.
+- Tue, 27 Oct, 3:30 pm  Final presentation
+    Tuesday tutorial. 10% of the subject.
+
+WORK PLAN BY WEEK
+-----------------
+
+Recess, 28 Sep to 4 Oct (0/4 done)
+  [ ] Lock section owners and editors on the Report page (Long) - due Sat, 3 Oct
+      Writers and editors are proposals based on business functions. Change them freely.
+  [ ] Create the shared report skeleton in OneDrive with all 16 headings and page budgets (Long) - due Sat, 3 Oct
+  [ ] Everyone adds 5 sources to the Library, each linked to a report section - due Sun, 4 Oct
+      Each specialist covers their own business function.
+  [ ] Confirm on Moodle: final presentation time limit, late-penalty rule, Spark+ and evidence dates (Long) - due Sun, 4 Oct
+      Outline says 5% a day late, the brief slides say 20%.
+
+Week 10, 5 to 9 Oct: drafts complete (0/12 done)
+  [ ] Team meeting: agree the recommended solution and evaluation criteria (Long) - due Tue, 6 Oct
+      Tue 21:00. Check the time after daylight saving starts.
+  [ ] Combine minutes for weeks 7, 8 and 9 and submit (Milestone 3) (Anisha) - due Thu, 8 Oct
+      Due Fri 9 Oct 11:55pm. Long checks before upload.
+  [ ] Draft Introduction (Anisha) - due Thu, 8 Oct
+  [ ] Draft Proposed design overview (Long) - due Thu, 8 Oct
+  [ ] Draw the system context diagram and assumptions table (Manoj) - due Thu, 8 Oct
+      Every assumption needs a source.
+  [ ] Draft requirements and the traceability table (Anisha) - due Thu, 8 Oct
+  [ ] Draft the bill of materials and resource selection (Santosh) - due Thu, 8 Oct
+  [ ] First draft of the risk register (up to 20) and the risk, safety and ethics text (Aryaman) - due Thu, 8 Oct
+  [ ] Draft the standards compliance table (up to 10 items) (Aryaman) - due Thu, 8 Oct
+      Australian standards must be named.
+  [ ] Draft the evaluation matrix: economic, technical, non-economic (Yupeng) - due Thu, 8 Oct
+      Include cost metrics: NPV, ROI, payback.
+  [ ] Draft the optimisation and validation outline (Santosh) - due Thu, 8 Oct
+  [ ] Log this week's contributions in the ledger - due Fri, 9 Oct
+      Every member, every Friday.
+
+Week 11, 12 to 16 Oct: quality assurance and contribution evidence (0/7 done)
+  [ ] Team meeting: swap sections for cross-editing (Long) - due Tue, 13 Oct
+  [ ] Cross-edit your assigned sections and record what you changed - due Fri, 16 Oct
+      Editor names are on the Report page.
+  [ ] Submit individual contribution evidence - due Fri, 16 Oct
+      Check the exact date on Moodle.
+  [ ] Single-voice pass 1: sections 1 to 5 (Long) - due Sat, 17 Oct
+  [ ] Check every citation against the reference list and confirm each source exists (Anisha) - due Sat, 17 Oct
+  [ ] Draft the digital tool acknowledgment (Long) - due Sat, 17 Oct
+  [ ] Draft the executive summary with headline NPV, ROI and payback (Long) - due Sat, 17 Oct
+      Max 750 words.
+
+Week 12, 19 to 23 Oct: freeze, polish, submit the report (0/10 done)
+  [ ] Content freeze (Long) - due Mon, 19 Oct
+      Edits only from here.
+  [ ] Team meeting: confirm the freeze and read the report through (Long) - due Tue, 20 Oct
+  [ ] Single-voice pass 2 and full proofread (Long) - due Wed, 21 Oct
+  [ ] Compile appendices: risk register, actual contributions by role, project plan, minutes, signed rules (Anisha) - due Wed, 21 Oct
+  [ ] Confirm written-by and edited-by names on every section (Anisha) - due Wed, 21 Oct
+  [ ] Draft the final presentation outline on the Presentation page (Long) - due Wed, 21 Oct
+  [ ] Similarity check, and confirm every AI-derived claim has a traditional source (Long) - due Thu, 22 Oct
+  [ ] Final format check: file name, contents and figures, page limits (Long) - due Thu, 22 Oct
+      File name: Marston_Tuesday_1530_Team3_...
+  [ ] Submit the final report on Moodle (Long) - due Thu, 22 Oct
+      Internal target Thu 22 Oct 8pm. Deadline Fri 23 Oct 11:30pm.
+  [ ] Complete Spark+ ratings - due Fri, 23 Oct
+      Check the exact date on Moodle.
+
+Week 13, 26 to 27 Oct: final presentation (0/4 done)
+  [ ] Build the final slides (Long) - due Sun, 25 Oct
+      Speakers send their own slides first.
+  [ ] Team practice run with timing - due Sun, 25 Oct
+  [ ] Upload the final slides on Moodle (project manager) (Long) - due Mon, 26 Oct
+      Moodle cut-off is Tue 11:30pm.
+  [ ] Deliver the final presentation - due Tue, 27 Oct
+      Tuesday tutorial, 15:30.
+
+RISK MANAGEMENT
+---------------
+- Report reads as several authors
+    Impact: High | Likelihood: High
+    Language and presentation is 20 marks and asks for a single voice. Chief Editor does two full passes and keeps a short style sheet.
+- A section has no independent editor
+    Impact: High | Likelihood: Medium
+    The brief requires every section to show who wrote it and who edited it. The Report page flags missing or identical names.
+- AI-derived content or references not verified
+    Impact: High | Likelihood: Medium
+    Every AI-derived claim needs a traditional source. Check each reference exists. Fill in the digital tool acknowledgment.
+- Solution is not shown to be the best
+    Impact: High | Likelihood: Medium
+    Quality of solution is 30 marks. Evaluation tables must compare options on cost and other metrics (NPV, ROI, payback).
+- A teammate under-contributes
+    Impact: High | Likelihood: Medium
+    Marks scale by each person's contribution factor. Weekly ledger entries and a Tuesday check-in make it visible early.
+- Late submission
+    Impact: High | Likelihood: Low
+    Internal target is Thu 22 Oct 8pm, one day before the deadline.
+- Sections overrun page limits
+    Impact: Medium | Likelihood: High
+    Page budgets are on the Report page. Trim at the Wk 11 edit, not on submission night.
+- System assumptions have no source
+    Impact: Medium | Likelihood: Medium
+    The assumptions table needs a source for each item. Link papers to sections in the Library.
+- Meeting time slips after daylight saving starts (4 Oct)
+    Impact: Low | Likelihood: Medium
+    Confirm the Tuesday 21:00 time in the group chat in the week of 5 Oct.
+- Leader overload (Team Leader and Chief Editor)
+    Impact: Medium | Likelihood: Medium
+    Delegate first-pass edits to the section editors. Keep Long's own writing to the executive summary, system integration and conclusion.

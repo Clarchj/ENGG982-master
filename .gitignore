@@ -1,0 +1,6 @@
+data/hub.json
+data/hub.json.tmp
+backups/
+node_modules/
+_site/
+dist/

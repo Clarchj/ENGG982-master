@@ -1,0 +1,517 @@
+{
+ "people": {
+  "anisha": {
+   "disc": "Civil",
+   "fn": "Mine Planning",
+   "name": "Anisha Budhathoki",
+   "ord": 1,
+   "role": "Secretary / Deputy Leader",
+   "short": "Anisha"
+  },
+  "aryaman": {
+   "disc": "Mechanical",
+   "fn": "Health, Safety and Community",
+   "name": "Aryaman Chakraborty",
+   "ord": 5,
+   "role": "Solution Specialist",
+   "short": "Aryaman"
+  },
+  "long": {
+   "disc": "Civil",
+   "fn": "Project Delivery",
+   "name": "Dinh Long Cao",
+   "ord": 0,
+   "role": "Team Leader / Chief Editor",
+   "short": "Long"
+  },
+  "manoj": {
+   "disc": "Mining",
+   "fn": "Mine Operations",
+   "name": "Manoj Pokharel",
+   "ord": 2,
+   "role": "Solution Specialist",
+   "short": "Manoj"
+  },
+  "santosh": {
+   "disc": "Electrical",
+   "fn": "Processing",
+   "name": "Santosh Lamichhane",
+   "ord": 3,
+   "role": "Solution Specialist",
+   "short": "Santosh"
+  },
+  "yupeng": {
+   "disc": "Electrical",
+   "fn": "Asset Management",
+   "name": "Yupeng Wang",
+   "ord": 4,
+   "role": "Solution Specialist",
+   "short": "Yupeng"
+  }
+ },
+ "sections": {
+  "ack": {
+   "editor": "anisha",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "long"
+  },
+  "app": {
+   "editor": "long",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "anisha"
+  },
+  "concl": {
+   "editor": "anisha",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "long"
+  },
+  "cover": {
+   "editor": "anisha",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "long"
+  },
+  "exec": {
+   "editor": "anisha",
+   "link": "",
+   "note": "Write last, once the headline numbers are fixed.",
+   "size": "",
+   "status": "todo",
+   "writer": "long"
+  },
+  "refs": {
+   "editor": "long",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "anisha"
+  },
+  "s1": {
+   "editor": "long",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "anisha"
+  },
+  "s2": {
+   "editor": "manoj",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "long"
+  },
+  "s3": {
+   "editor": "santosh",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "manoj"
+  },
+  "s4": {
+   "editor": "long",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "anisha"
+  },
+  "s5": {
+   "editor": "yupeng",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "santosh"
+  },
+  "s6": {
+   "editor": "anisha",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "aryaman"
+  },
+  "s7": {
+   "editor": "manoj",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "aryaman"
+  },
+  "s8": {
+   "editor": "long",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "yupeng"
+  },
+  "s9": {
+   "editor": "yupeng",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "santosh"
+  },
+  "toc": {
+   "editor": "anisha",
+   "link": "",
+   "note": "",
+   "size": "",
+   "status": "todo",
+   "writer": "long"
+  }
+ },
+ "tasks": {
+  "t01": {
+   "due": "2026-10-03",
+   "note": "Writers and editors are proposals based on business functions. Change them freely.",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Lock section owners and editors on the Report page",
+   "wk": "R"
+  },
+  "t02": {
+   "due": "2026-10-03",
+   "note": "",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Create the shared report skeleton in OneDrive with all 16 headings and page budgets",
+   "wk": "R"
+  },
+  "t03": {
+   "due": "2026-10-04",
+   "note": "Each specialist covers their own business function.",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Everyone adds 5 sources to the Library, each linked to a report section",
+   "wk": "R"
+  },
+  "t04": {
+   "due": "2026-10-04",
+   "note": "Outline says 5% a day late, the brief slides say 20%.",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Confirm on Moodle: final presentation time limit, late-penalty rule, Spark+ and evidence dates",
+   "wk": "R"
+  },
+  "t05": {
+   "due": "2026-10-06",
+   "note": "Tue 21:00. Check the time after daylight saving starts.",
+   "owner": "long",
+   "section": "s8",
+   "status": "todo",
+   "title": "Team meeting: agree the recommended solution and evaluation criteria",
+   "wk": "10"
+  },
+  "t06": {
+   "due": "2026-10-08",
+   "note": "Due Fri 9 Oct 11:55pm. Long checks before upload.",
+   "owner": "anisha",
+   "section": "app",
+   "status": "todo",
+   "title": "Combine minutes for weeks 7, 8 and 9 and submit (Milestone 3)",
+   "wk": "10"
+  },
+  "t07": {
+   "due": "2026-10-08",
+   "note": "",
+   "owner": "anisha",
+   "section": "s1",
+   "status": "todo",
+   "title": "Draft Introduction",
+   "wk": "10"
+  },
+  "t08": {
+   "due": "2026-10-08",
+   "note": "",
+   "owner": "long",
+   "section": "s2",
+   "status": "todo",
+   "title": "Draft Proposed design overview",
+   "wk": "10"
+  },
+  "t09": {
+   "due": "2026-10-08",
+   "note": "Every assumption needs a source.",
+   "owner": "manoj",
+   "section": "s3",
+   "status": "todo",
+   "title": "Draw the system context diagram and assumptions table",
+   "wk": "10"
+  },
+  "t10": {
+   "due": "2026-10-08",
+   "note": "",
+   "owner": "anisha",
+   "section": "s4",
+   "status": "todo",
+   "title": "Draft requirements and the traceability table",
+   "wk": "10"
+  },
+  "t11": {
+   "due": "2026-10-08",
+   "note": "",
+   "owner": "santosh",
+   "section": "s5",
+   "status": "todo",
+   "title": "Draft the bill of materials and resource selection",
+   "wk": "10"
+  },
+  "t12": {
+   "due": "2026-10-08",
+   "note": "",
+   "owner": "aryaman",
+   "section": "s6",
+   "status": "todo",
+   "title": "First draft of the risk register (up to 20) and the risk, safety and ethics text",
+   "wk": "10"
+  },
+  "t13": {
+   "due": "2026-10-08",
+   "note": "Australian standards must be named.",
+   "owner": "aryaman",
+   "section": "s7",
+   "status": "todo",
+   "title": "Draft the standards compliance table (up to 10 items)",
+   "wk": "10"
+  },
+  "t14": {
+   "due": "2026-10-08",
+   "note": "Include cost metrics: NPV, ROI, payback.",
+   "owner": "yupeng",
+   "section": "s8",
+   "status": "todo",
+   "title": "Draft the evaluation matrix: economic, technical, non-economic",
+   "wk": "10"
+  },
+  "t15": {
+   "due": "2026-10-08",
+   "note": "",
+   "owner": "santosh",
+   "section": "s9",
+   "status": "todo",
+   "title": "Draft the optimisation and validation outline",
+   "wk": "10"
+  },
+  "t16": {
+   "due": "2026-10-09",
+   "note": "Every member, every Friday.",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Log this week's contributions in the ledger",
+   "wk": "10"
+  },
+  "t17": {
+   "due": "2026-10-13",
+   "note": "",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Team meeting: swap sections for cross-editing",
+   "wk": "11"
+  },
+  "t18": {
+   "due": "2026-10-16",
+   "note": "Editor names are on the Report page.",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Cross-edit your assigned sections and record what you changed",
+   "wk": "11"
+  },
+  "t19": {
+   "due": "2026-10-16",
+   "note": "Check the exact date on Moodle.",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Submit individual contribution evidence",
+   "wk": "11"
+  },
+  "t20": {
+   "due": "2026-10-17",
+   "note": "",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Single-voice pass 1: sections 1 to 5",
+   "wk": "11"
+  },
+  "t21": {
+   "due": "2026-10-17",
+   "note": "",
+   "owner": "anisha",
+   "section": "refs",
+   "status": "todo",
+   "title": "Check every citation against the reference list and confirm each source exists",
+   "wk": "11"
+  },
+  "t22": {
+   "due": "2026-10-17",
+   "note": "",
+   "owner": "long",
+   "section": "ack",
+   "status": "todo",
+   "title": "Draft the digital tool acknowledgment",
+   "wk": "11"
+  },
+  "t23": {
+   "due": "2026-10-17",
+   "note": "Max 750 words.",
+   "owner": "long",
+   "section": "exec",
+   "status": "todo",
+   "title": "Draft the executive summary with headline NPV, ROI and payback",
+   "wk": "11"
+  },
+  "t24": {
+   "due": "2026-10-19",
+   "note": "Edits only from here.",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Content freeze",
+   "wk": "12"
+  },
+  "t25": {
+   "due": "2026-10-20",
+   "note": "",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Team meeting: confirm the freeze and read the report through",
+   "wk": "12"
+  },
+  "t26": {
+   "due": "2026-10-21",
+   "note": "",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Single-voice pass 2 and full proofread",
+   "wk": "12"
+  },
+  "t27": {
+   "due": "2026-10-21",
+   "note": "",
+   "owner": "anisha",
+   "section": "app",
+   "status": "todo",
+   "title": "Compile appendices: risk register, actual contributions by role, project plan, minutes, signed rules",
+   "wk": "12"
+  },
+  "t28": {
+   "due": "2026-10-21",
+   "note": "",
+   "owner": "anisha",
+   "section": "",
+   "status": "todo",
+   "title": "Confirm written-by and edited-by names on every section",
+   "wk": "12"
+  },
+  "t29": {
+   "due": "2026-10-22",
+   "note": "",
+   "owner": "long",
+   "section": "refs",
+   "status": "todo",
+   "title": "Similarity check, and confirm every AI-derived claim has a traditional source",
+   "wk": "12"
+  },
+  "t30": {
+   "due": "2026-10-22",
+   "note": "File name: Marston_Tuesday_1530_Team3_...",
+   "owner": "long",
+   "section": "toc",
+   "status": "todo",
+   "title": "Final format check: file name, contents and figures, page limits",
+   "wk": "12"
+  },
+  "t31": {
+   "due": "2026-10-22",
+   "note": "Internal target Thu 22 Oct 8pm. Deadline Fri 23 Oct 11:30pm.",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Submit the final report on Moodle",
+   "wk": "12"
+  },
+  "t32": {
+   "due": "2026-10-23",
+   "note": "Check the exact date on Moodle.",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Complete Spark+ ratings",
+   "wk": "12"
+  },
+  "t33": {
+   "due": "2026-10-21",
+   "note": "",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Draft the final presentation outline on the Presentation page",
+   "wk": "12"
+  },
+  "t34": {
+   "due": "2026-10-25",
+   "note": "Speakers send their own slides first.",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Build the final slides",
+   "wk": "13"
+  },
+  "t35": {
+   "due": "2026-10-25",
+   "note": "",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Team practice run with timing",
+   "wk": "13"
+  },
+  "t36": {
+   "due": "2026-10-26",
+   "note": "Moodle cut-off is Tue 11:30pm.",
+   "owner": "long",
+   "section": "",
+   "status": "todo",
+   "title": "Upload the final slides on Moodle (project manager)",
+   "wk": "13"
+  },
+  "t37": {
+   "due": "2026-10-27",
+   "note": "Tuesday tutorial, 15:30.",
+   "owner": "",
+   "section": "",
+   "status": "todo",
+   "title": "Deliver the final presentation",
+   "wk": "13"
+  }
+ }
+}
