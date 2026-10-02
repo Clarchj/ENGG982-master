@@ -29,6 +29,18 @@ Your data is saved in `data/hub.json`. Copies are kept in `backups/`.
 
 This version saves in the browser you use. Press **Backup** in the top bar now and then.
 
+## D. Add the shared Supabase database (optional)
+
+1. Create a free project at https://supabase.com.
+2. In Supabase, open SQL Editor, paste everything from `supabase.sql`, click Run.
+3. In Supabase, open Project Settings > API. Copy the **Project URL** and the **anon public** key.
+4. Open `.env` in this folder and paste them in:
+   `SUPABASE_URL=` and `SUPABASE_ANON_KEY=`
+5. In Command Prompt, in this folder, run: `node tools/make-config.js`
+6. Push to GitHub. The top bar now says **Cloud database, saved**.
+
+Never paste the `service_role` key or your database password anywhere in this project.
+
 ## Something wrong?
 
 - "Node.js is not installed": do step 1 of option A, then double-click launch.bat again.

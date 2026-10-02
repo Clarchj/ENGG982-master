@@ -10,6 +10,14 @@ const path = require('path');
 const os = require('os');
 const cp = require('child_process');
 
+/* Optional settings file: .env (PORT, HUB_PIN, ...). Real environment variables win. */
+try {
+  for (const line of fs.readFileSync(path.join(__dirname, '.env'), 'utf8').split(/\r?\n/)) {
+    const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/);
+    if (m && process.env[m[1]] === undefined) process.env[m[1]] = m[2].replace(/^(['"])(.*)\1$/, '$2');
+  }
+} catch (e) { /* no .env: fine */ }
+
 const PORT = Number(process.env.PORT) || 3982;
 const HOST = process.env.HOST || '127.0.0.1';   // 127.0.0.1 = this computer only. 0.0.0.0 = anyone on your network.
 const PIN = process.env.HUB_PIN || '';           // optional shared password (any user name)
