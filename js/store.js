@@ -10,7 +10,12 @@
 const COLS=['sections','papers','ideas','people','tasks','contrib','inbox','slides','meta','secdefs','criteria','topics','weeks','deadlines','risks','plantext','roles','guide','flow'];
 const D={}; COLS.forEach(c=>{D[c]={};});
 let db=null, mode='loading';
-const W={put:async()=>{},del:async()=>{}};
+const W={put:async()=>{},del:async()=>{},test:async()=>{
+  /* this browser only */
+  try{const k='engg982hub.test',v=String(Date.now());localStorage.setItem(k,v);const ok=localStorage.getItem(k)===v;localStorage.removeItem(k);
+    return [['Write and read this browser\'s storage',ok,ok?'':'storage is blocked in this browser']];}
+  catch(e){return [['Write and read this browser\'s storage',false,'storage is blocked in this browser']];}
+}};
 const CFG=window.HUB_CONFIG||{};
 const S={view:ls.get('hub.view')||'dash',sub:{lib:'papers',team:'tasks',pres:'final',flow:'process'},rv:'',f:{papers:{q:'',fn:'',st:''},tasks:{owner:'',st:'',wk:''},ledger:{person:''}}};
 
@@ -39,6 +44,16 @@ async function tryServer(){
   try{setAll(await get());}catch(e){return false;}
   W.put=async(c,id,o)=>{const r=await fetch('api/'+c+'/'+encodeURIComponent(id),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});if(!r.ok)throw {code:'server'};};
   W.del=async(c,id)=>{const r=await fetch('api/'+c+'/'+encodeURIComponent(id),{method:'DELETE'});if(!r.ok)throw {code:'server'};};
+  W.test=async()=>{
+    const out=[],id='_ping_'+uid(),at=new Date().toISOString();
+    try{
+      let r=await fetch('api/meta/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({at})});
+      out.push(['Write a test record',r.ok,r.ok?'':'HTTP '+r.status+(r.status===401?' (password needed)':'')]);if(!r.ok)return out;
+      const all=await (await fetch('api/all',{cache:'no-store'})).json();
+      out.push(['Read it back',!!(all.meta&&all.meta[id]&&all.meta[id].at===at)]);
+      r=await fetch('api/meta/'+id,{method:'DELETE'});out.push(['Delete it',r.ok]);
+    }catch(e){out.push(['Reach the local server',false,e.message]);}
+    return out;};
   const again=async()=>{try{setAll(await get());schedule();}catch(e){}};
   try{const es=new EventSource('api/events');es.onmessage=again;}catch(e){}
   setInterval(again,20000);
@@ -57,6 +72,17 @@ async function tryCloud(){
   try{setAll(await get());}catch(e){return false;}
   W.put=async(c,id,o)=>{const r=await fetch(base+'?on_conflict=col,id',{method:'POST',headers:{...H,Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({col:c,id,data:o})});if(!r.ok)throw {code:'cloud'};};
   W.del=async(c,id)=>{const r=await fetch(base+'?col=eq.'+encodeURIComponent(c)+'&id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:H});if(!r.ok)throw {code:'cloud'};};
+  W.test=async()=>{
+    const out=[],id='_ping_'+uid(),at=new Date().toISOString();
+    try{
+      let r=await fetch(base+'?on_conflict=col,id',{method:'POST',headers:{...H,Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({col:'meta',id,data:{at}})});
+      const why=r.status===404?'HTTP 404: the hub table is missing. Run supabase.sql in the Supabase SQL Editor.':(r.status===401||r.status===403)?'HTTP '+r.status+': the key or the access policy is wrong.':'HTTP '+r.status;
+      out.push(['Write a test row to Supabase',r.ok,r.ok?'':why]);if(!r.ok)return out;
+      r=await fetch(base+'?select=data&col=eq.meta&id=eq.'+encodeURIComponent(id),{headers:H,cache:'no-store'});
+      const j=r.ok?await r.json():[];out.push(['Read it back from Supabase',!!(j[0]&&j[0].data&&j[0].data.at===at),r.ok?'':'HTTP '+r.status]);
+      r=await fetch(base+'?col=eq.meta&id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:H});out.push(['Delete it',r.ok,r.ok?'':'HTTP '+r.status]);
+    }catch(e){out.push(['Reach Supabase',false,'network error: '+e.message]);}
+    return out;};
   if(isEmpty()){ /* brand new table: load the starting data once */
     const seed=await fetchSeed();
     if(seed){setAll(seed);const rows=[];COLS.forEach(c=>Object.entries(D[c]).forEach(([id,data])=>rows.push({col:c,id,data})));
@@ -64,6 +90,19 @@ async function tryCloud(){
   }
   setInterval(async()=>{try{setAll(await get());schedule();}catch(e){}},20000);
   return true;
+}
+
+/* Why is the cloud database not in use? Asks Supabase directly and reports the reason in plain words. */
+async function diagCloud(){
+  if(!CFG.supabaseUrl||!CFG.supabaseKey)return [['config.js has a Supabase URL and key',false,'config.js is empty on the published site. Fill in .env, run node tools/make-config.js, then commit and push config.js.']];
+  const base=CFG.supabaseUrl.replace(/\/+$/,'')+'/rest/v1/'+(CFG.table||'hub');
+  try{
+    const r=await fetch(base+'?select=col&limit=1',{headers:{apikey:CFG.supabaseKey,Authorization:'Bearer '+CFG.supabaseKey},cache:'no-store'});
+    if(r.ok)return [['Supabase answered and the table exists',true,'It works now. Reload the page.']];
+    const why=r.status===404?'HTTP 404: the hub table is missing. Run supabase.sql in the Supabase SQL Editor.':
+      (r.status===401||r.status===403)?'HTTP '+r.status+': the key is wrong, or the access policy from supabase.sql is missing.':'HTTP '+r.status;
+    return [['Supabase answered',false,why]];
+  }catch(e){return [['Reach Supabase',false,'network error: check SUPABASE_URL in config.js. ('+e.message+')']];}
 }
 
 async function init(){

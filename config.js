@@ -1,11 +1,6 @@
-/*
-  Optional cloud database. Leave both values empty and the hub saves in the browser you use.
-  To share one database between devices and teammates on GitHub Pages, create a free Supabase
-  project, run supabase.sql once, then paste the Project URL and the anon public key here.
-  (Step by step in HUB-README.md.)
-*/
+/* Written by tools/make-config.js from .env. Safe to commit: the anon key is public by design. */
 window.HUB_CONFIG = {
-  supabaseUrl: '',   // e.g. 'https://abcdxyz.supabase.co'
-  supabaseKey: '',   // the "anon public" key
-  table: 'hub'
+  "supabaseUrl": "https://lgbcroznscogvioatymm.supabase.co",
+  "supabaseKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnYmNyb3puc2NvZ3Zpb2F0eW1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5Mzg5MzYsImV4cCI6MjEwNjUxNDkzNn0.EheG5c7goO03gp8hwNn7SL9nt6NDQl1-nl3oqVfFblM",
+  "table": "hub"
 };

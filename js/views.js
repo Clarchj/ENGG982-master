@@ -225,7 +225,7 @@ function vSetup(){
    ${shead('Marking rubric criteria','<button class="btn pri sm" data-act="add-crit">Add criterion</button>')}<div class="tw sec"><table style="min-width:520px"><thead><tr><th>Criterion</th><th class="num">Marks</th><th>Applies to</th><th></th></tr></thead><tbody>${crit}</tbody></table></div>
    ${shead('Required content topics','<button class="btn pri sm" data-act="add-topic">Add topic</button>')}<div class="tw sec"><table style="min-width:420px"><thead><tr><th>Topic</th><th></th></tr></thead><tbody>${top}</tbody></table></div>
    ${shead('Weeks','<button class="btn pri sm" data-act="add-week">Add week</button>')}<div class="tw sec"><table style="min-width:480px"><thead><tr><th>Code</th><th>Title</th><th></th></tr></thead><tbody>${wks}</tbody></table></div>
-   ${shead('Data','')}<div class="card"><div class="row"><button class="btn" data-act="backup">Download backup (JSON)</button><label class="row">Restore from backup <input type="file" accept=".json,application/json" data-chg="restore"></label></div>
+   ${shead('Data','')}<div class="card"><div class="row"><button class="btn" data-act="test-db">Test database</button><button class="btn" data-act="backup">Download backup (JSON)</button><label class="row">Restore from backup <input type="file" accept=".json,application/json" data-chg="restore"></label></div>
    <p class="muted" style="margin:10px 0 6px">Reset puts a list back to the built-in version. Tasks, sources, people and the ledger are not touched. Click a reset button twice to confirm.</p><div class="row">${resets}</div></div>`;
 }
 

@@ -34,7 +34,7 @@ This version saves in the browser you use. Press **Backup** in the top bar now a
 1. Create a free project at https://supabase.com.
 2. In Supabase, open SQL Editor, paste everything from `supabase.sql`, click Run.
 3. In Supabase, open Project Settings > API. Copy the **Project URL** and the **anon public** key.
-4. Open `.env` in this folder and paste them in:
+4. In this folder, copy the file `.env.example` and name the copy `.env`. Open `.env` and paste the two values in:
    `SUPABASE_URL=` and `SUPABASE_ANON_KEY=`
 5. In Command Prompt, in this folder, run: `node tools/make-config.js`
 6. Push to GitHub. The top bar now says **Cloud database, saved**.

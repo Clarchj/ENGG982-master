@@ -30,6 +30,11 @@ document.addEventListener('click',e=>{
    case 'inbox-task':{const i=D.inbox[d.id];if(i)F.task(null,{title:i.text,wk:'10',status:'todo'},()=>del('inbox',d.id));break;}
    case 'reset':{if(!t.dataset.armed){t.dataset.armed='1';t.dataset.label=t.textContent;t.textContent='Click again to confirm';setTimeout(()=>{if(t.isConnected&&t.dataset.armed){delete t.dataset.armed;t.textContent=t.dataset.label;}},4000);break;}
      resetCol(d.col).then(()=>toast('Reset to the built-in list'));break;}
+   case 'test-db':{t.disabled=true;const ML={shared:'the shared page database',server:'the local server (data/hub.json)',cloud:'Supabase',local:'this browser only'};
+     const wantCloud=mode==='local'&&!!(CFG.supabaseUrl||CFG.supabaseKey);
+     (wantCloud?diagCloud():W.test()).then(res=>{t.disabled=false;const pass=!wantCloud&&res.every(x=>x[1]);
+       showText('Database test',(pass?'PASS':'FAIL')+'\n\nSaving to: '+(ML[mode]||mode)+'\n\n'+res.map(x=>(x[1]?'[ok]   ':'[FAIL] ')+x[0]+(x[2]?'\n       '+x[2]:'')).join('\n')+
+       (wantCloud?'\n\nSupabase is set up in config.js but the hub fell back to this browser only, so nothing is being shared.':mode==='local'?'\n\nThis is NOT a shared database. Data is only in this browser. To share it, set up Supabase (HOW-TO-RUN.md, section D).':'')+'\n');});break;}
    case 'export':exportTab();break;
    case 'copy-refs':copyRefs();break;
    case 'backup':saveFile('engg982-hub-backup-'+today()+'.json',JSON.stringify(D,null,1),'application/json');break;
