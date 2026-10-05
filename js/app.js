@@ -39,6 +39,7 @@ document.addEventListener('click',e=>{
     case 'rolechip':t.classList.toggle('on');break;
     case 'addrow':{const box=t.previousElementSibling;box.insertAdjacentHTML('beforeend',rowHtml('','',''));box.lastElementChild.querySelector('input').focus();break;}
     case 'rmrow':t.closest('.ur').remove();break;
+    case 'rmdemo':removeDemo();break;
     case 'testdb':testDb(t);break;
   }
 });

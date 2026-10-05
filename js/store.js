@@ -142,7 +142,7 @@ async function importReport(){
   const old=Object.keys(D.units).filter(id=>/^[rs]\d+$/.test(id));
   const dels=old.map(id=>['units',id]).concat(Object.entries(D.actions).filter(([i,a])=>old.includes(a.unit)).map(([i])=>['actions',i]));
   const puts=R.units.map(u=>{const o={...u};delete o.id;return ['units',u.id,o];});
-  puts.push(['meta','seed',{v:2,at:Date.now()}]);
+  puts.push(['meta','seed',{v:3,at:Date.now()}]);
   await batch(puts,dels);importReport.busy=false;
 }
 async function seedCheck(){
@@ -151,6 +151,13 @@ async function seedCheck(){
   if(!Object.keys(D.people).length)DEF.people.forEach(p=>{const o={...p};delete o.id;jobs.push(['people',p.id,o]);});
   if(!D.meta.deadlines)jobs.push(['meta','deadlines',{text:DEF.deadlines}]);
   if(!D.meta.roles)jobs.push(['meta','roles',DEF.roles]);
+  /* the leader wrote every report chapter */
+  if(D.units['r-cover']&&!(D.meta.seed&&D.meta.seed.v>=3)){
+    Object.entries(D.units).forEach(([i,u])=>{if(u.art==='report'&&!u.parent&&!u.writer)jobs.push(['units',i,{...u,writer:LEADER}]);});
+    jobs.push(['meta','seed',{v:3,at:Date.now()}]);
+  }
+  /* example actions, once */
+  if(D.units['r-cover']&&!D.meta.demo){demoActions().forEach(j=>jobs.push(j));jobs.push(['meta','demo',{v:1,at:Date.now()}]);}
   if(jobs.length)await batch(jobs,[]);
 }
 

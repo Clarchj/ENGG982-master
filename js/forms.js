@@ -259,6 +259,7 @@ function openSettings(){
     <details><summary>Team</summary><div class="rows" data-col="people">${people().map(p=>rowHtml(p.id,p.short,p.name)).join('')}</div><button type="button" class="btn sm" data-act="addrow">+ Add</button></details>
     <details><summary>Deadlines</summary><textarea id="sdl" rows="7" aria-label="Deadlines">${esc(dl)}</textarea><p class="hint">One per line: date | report or slides | name</p></details>
     <details><summary>Leader PIN</summary><input id="spin" type="password" inputmode="numeric" maxlength="8" placeholder="New PIN, 4 to 8 digits (leave empty to keep)"></details>
+    <details><summary>Examples</summary><p class="hint">The example actions teammates see on first open.</p><button type="button" class="btn" data-act="rmdemo">Remove the example actions</button></details>
     <details><summary>Database</summary><button type="button" class="btn" data-act="testdb">Test database</button><pre id="dbout" class="out" hidden></pre></details>
     <div class="row"><button class="btn pri big">Save</button><button type="button" class="link" data-act="close">Cancel</button></div></form>${closer}`);
 }
@@ -288,4 +289,10 @@ async function testDb(btn){
   const fail=wantCloud&&mode==='local';
   out.textContent=((pass&&!fail)?'PASS':'FAIL')+'\nSaving to: '+(MODES[mode]||mode)+'\n'+res.map(x=>(x[1]?'[ok]   ':'[FAIL] ')+x[0]+(x[2]?'\n       '+x[2]:'')).join('\n')+extra+(mode==='local'&&!wantCloud?'\n\nThis is NOT shared. Data stays in this browser. See HOW-TO-RUN.md, section D.':'');
   btn.disabled=false;
+}
+
+async function removeDemo(){
+  const dels=Object.entries(D.actions).filter(([i,a])=>a.demo).map(([i])=>['actions',i]);
+  if(!dels.length){toast('No examples left');return;}
+  await batch([['meta','demo',{v:1,removed:Date.now()}]],dels);toast('Examples removed');
 }

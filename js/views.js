@@ -115,7 +115,7 @@ function card(x,mode){
   if(s==='done')btn=`<small>Approved${x.doneAt?' '+esc(fmtD(new Date(x.doneAt).toLocaleDateString('en-CA',{timeZone:TZ}))):''}</small>`;
   const canX=lead||(S.me&&x.by===S.me&&s==='issue');
   const where=mode==='inline'?(x.spot?`<p class="spot">${esc(x.spot)}</p>`:''):`<button class="loc" data-act="goto" data-unit="${esc(x.unit)}" title="Open it in Sections">${mode==='appr'&&u?`<em class="tag ${u.art}">${esc(artOf(u.art).short)}</em> `:''}${esc(placeText(x))}</button>`;
-  return `<article class="card ${COL(s)}" id="a-${id}"><div class="ct"><span class="ty" title="${esc(T.hint)}">${T.icon} ${esc(T.label)}</span>${canX?`<button class="x" data-act="del" data-id="${id}" aria-label="Remove" title="Remove">&times;</button>`:''}</div>
+  return `<article class="card ${COL(s)}" id="a-${id}"><div class="ct"><span class="ty" title="${esc(T.hint)}">${T.icon} ${esc(T.label)}${x.demo?' <em class="tag" title="An example. The leader can remove examples in Settings.">example</em>':''}</span>${canX?`<button class="x" data-act="del" data-id="${id}" aria-label="Remove" title="Remove">&times;</button>`:''}</div>
     ${where}${body}${plan}${work}
     <div class="cm">${x.owner?avatar(x.owner)+'<span>'+esc(person(x.owner).short)+'</span>':`<span class="none">${x.by?'Raised by '+esc(person(x.by).short):'No one yet'}</span>`}${x.due&&s!=='done'?`<span class="due${late?' late':''}" title="Estimated finish">${late?'Late · ':''}${esc(fmtD(x.due))}</span>`:''}${track}</div>
     ${btn?`<div class="cb">${btn}</div>`:''}</article>`;
