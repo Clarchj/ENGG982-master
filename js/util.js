@@ -3,21 +3,20 @@ const TZ='Australia/Sydney';
 const $=(s,r)=>(r||document).querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-function zoned(d,t){
-  const p=String(d).split('-').map(Number),q=String(t||'00:00').split(':').map(Number);
-  const want=Date.UTC(p[0],p[1]-1,p[2],q[0]||0,q[1]||0);let utc=want;
-  const f=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-  for(let i=0;i<2;i++){const parts=f.formatToParts(new Date(utc));const g=k=>+parts.find(x=>x.type===k).value;utc+=want-Date.UTC(g('year'),g('month')-1,g('day'),g('hour'),g('minute'));}
-  return utc;
-}
+const store=k=>({get(n){try{return k.getItem(n)}catch(e){return null}},set(n,v){try{k.setItem(n,v)}catch(e){}},del(n){try{k.removeItem(n)}catch(e){}}});
+const nul={getItem(){return null},setItem(){},removeItem(){}};
+let L1=nul,S1=nul;try{L1=window.localStorage||nul;}catch(e){}try{S1=window.sessionStorage||nul;}catch(e){}
+const ls=store(L1), ss=store(S1);
+/* dates are plain 'YYYY-MM-DD' strings in Sydney time */
 const today=()=>new Date().toLocaleDateString('en-CA',{timeZone:TZ});
 const dnum=s=>{const p=String(s).split('-').map(Number);return Date.UTC(p[0],p[1]-1,p[2]);};
-const daysTo=s=>Math.round((dnum(s)-dnum(today()))/864e5);
-const fmtD=s=>s?new Date(s+'T12:00:00').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'}):'';
-const fmtDT=t=>new Date(t).toLocaleString('en-AU',{timeZone:TZ,weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',hour12:true});
-const until=t=>{const ms=t-Date.now();if(ms<0)return 'passed';const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5);return d>0?d+'d '+h+'h':h+'h '+Math.floor(ms%36e5/6e4)+'m';};
-const opts=(a,sel)=>a.map(o=>`<option value="${esc(o[0])}"${String(o[0])===String(sel==null?'':sel)?' selected':''}>${esc(o[1])}</option>`).join('');
-const pill=(c,t)=>`<span class="pill ${c}">${esc(t)}</span>`;
-const linkOf=u=>/^https?:\/\//i.test(u||'')?`<a href="${esc(u)}" target="_blank" rel="noopener">Open</a>`:(u?`<span class="mono">${esc(u)}</span>`:'');
-function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>{t.hidden=true;},3200);}
+const dstr=n=>new Date(n).toISOString().slice(0,10);
+const addDays=(s,k)=>dstr(dnum(s)+k*864e5);
+const dow=s=>(new Date(dnum(s)).getUTCDay()+6)%7;           /* Monday = 0 */
+const fmtD=s=>s?new Date(s+'T12:00:00Z').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}):'';
+const fmtM=s=>new Date(s+'T12:00:00Z').toLocaleDateString('en-AU',{month:'short',timeZone:'UTC'});
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>{t.hidden=true;},3000);}
+/* small, fixed-salt hash for the leader PIN. A soft lock for a team of six, not bank security. */
+function hashPin(p){let h1=0xdeadbeef,h2=0x41c6ce57;const s='engg982:'+p;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677);}
+  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+  return (4294967296*(2097151&h2)+(h1>>>0)).toString(36);}

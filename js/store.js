@@ -7,7 +7,7 @@
     local   this browser only (GitHub Pages with no cloud set up)
   The first one that works wins. Everything else in the app is the same in all four.
 */
-const COLS=['sections','papers','ideas','people','tasks','contrib','inbox','slides','meta','secdefs','criteria','topics','weeks','deadlines','risks','plantext','roles','guide','flow'];
+const COLS=['units','actions','people','meta'];
 const D={}; COLS.forEach(c=>{D[c]={};});
 let db=null, mode='loading';
 const W={put:async()=>{},del:async()=>{},test:async()=>{
@@ -17,7 +17,7 @@ const W={put:async()=>{},del:async()=>{},test:async()=>{
   catch(e){return [['Write and read this browser\'s storage',false,'storage is blocked in this browser']];}
 }};
 const CFG=window.HUB_CONFIG||{};
-const S={view:ls.get('hub.view')||'dash',sub:{lib:'papers',team:'tasks',pres:'final',flow:'process'},rv:'',f:{papers:{q:'',fn:'',st:''},tasks:{owner:'',st:'',wk:''},ledger:{person:''}}};
+const S={me:ls.get('hub.me')||'',lead:ss.get('hub.lead')==='1',art:'',unit:'',who:'',allDone:false};
 
 function fail(e){toast(e&&e.code==='invalid_argument'?'Saving is not allowed for your access level.':'Could not save. Try again.');}
 async function put(col,id,obj){D[col][id]=obj;render();try{await W.put(col,id,obj);}catch(e){fail(e);}}
@@ -28,14 +28,13 @@ const isEmpty=()=>COLS.every(c=>!Object.keys(D[c]).length);
 
 /* redraw without stealing focus while someone is typing */
 let pending=false;
-const editing=()=>{const a=document.activeElement;return a&&$('#view').contains(a)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)};
+const editing=()=>{const a=document.activeElement;return a&&$('#main').contains(a)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)};
 function schedule(){if(editing()){pending=true;return;}render();}
 document.addEventListener('focusout',()=>{if(pending)setTimeout(()=>{if(!editing()){pending=false;render();}},60);});
 
 /* ---- local (this browser) ---- */
 function loadLocal(){try{setAll(JSON.parse(ls.get('engg982hub')||'{}'));}catch(e){}}
 function saveLocal(){ls.set('engg982hub',JSON.stringify(D));}
-async function fetchSeed(){try{const r=await fetch('data/seed.json',{cache:'no-store'});if(!r.ok)return null;return await r.json();}catch(e){return null;}}
 
 /* ---- local server ---- */
 async function tryServer(){
@@ -83,11 +82,6 @@ async function tryCloud(){
       r=await fetch(base+'?col=eq.meta&id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:H});out.push(['Delete it',r.ok,r.ok?'':'HTTP '+r.status]);
     }catch(e){out.push(['Reach Supabase',false,'network error: '+e.message]);}
     return out;};
-  if(isEmpty()){ /* brand new table: load the starting data once */
-    const seed=await fetchSeed();
-    if(seed){setAll(seed);const rows=[];COLS.forEach(c=>Object.entries(D[c]).forEach(([id,data])=>rows.push({col:c,id,data})));
-      try{await fetch(base+'?on_conflict=col,id',{method:'POST',headers:{...H,Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(rows)});}catch(e){}}
-  }
   setInterval(async()=>{try{setAll(await get());schedule();}catch(e){}},20000);
   return true;
 }
@@ -116,29 +110,24 @@ async function init(){
       try{d.collection(c).onSnapshot(snap=>{const o={};snap.docs.forEach(x=>{o[x.id]=x.data();});D[c]=o;schedule();},e=>{console.warn(c,e&&e.code);if(e&&e.code==='revoked'){mode='local';render();}});}
       catch(e){console.warn(e);}
     });
+    setTimeout(seedCheck,1800);
     return;
   }
-  if(await tryServer()){mode='server';render();return;}
-  if(await tryCloud()){mode='cloud';render();return;}
-  /* this browser only. First visit on a fresh browser: start from the shipped data */
-  loadLocal();mode='local';
-  if(isEmpty()&&!ls.get('engg982hub.seeded')){const seed=await fetchSeed();if(seed){setAll(seed);saveLocal();}ls.set('engg982hub.seeded','1');}
-  render();
+  if(await tryServer()){mode='server';await seedCheck();render();return;}
+  if(await tryCloud()){mode='cloud';await seedCheck();render();return;}
+  loadLocal();mode='local';await seedCheck();render();
 }
 
-/* ---------- editable reference data ---------- */
+/* First time the hub opens empty: write the report chapters, slides and team once. Ids are fixed, so doing it twice changes nothing. */
+async function seedCheck(){
+  const jobs=[];
+  if(!Object.keys(D.units).length&&!D.meta.seeded){DEF.units.forEach(u=>{const o={...u};delete o.id;jobs.push(put('units',u.id,o));});}
+  if(!Object.keys(D.people).length){DEF.people.forEach(p=>{const o={...p};delete o.id;jobs.push(put('people',p.id,o));});}
+  if(!D.meta.deadlines)jobs.push(put('meta','deadlines',{text:DEF.deadlines}));
+  if(jobs.length&&!D.meta.seeded)jobs.push(put('meta','seeded',{at:Date.now()}));
+  await Promise.all(jobs);
+}
+
+/* ---------- reading the data ---------- */
 const arr=c=>Object.entries(D[c]).map(([id,v])=>({id,...v}));
 const byOrd=(a,b)=>(a.ord==null||a.ord===''?1e9:a.ord)-(b.ord==null||b.ord===''?1e9:b.ord);
-function items(col){const has=Object.keys(D[col]).length>0;const src=has?arr(col):(DEF[col]||[]).map((x,i)=>({...x,ord:i}));return src.sort(byOrd);}
-const item=(col,id)=>items(col).find(x=>x.id===id);
-const nextOrd=col=>items(col).reduce((m,x)=>Math.max(m,x.ord==null||x.ord===''?0:Number(x.ord)),-1)+1;
-async function ensure(col){
-  if(!DEF[col]||Object.keys(D[col]).length)return;
-  await Promise.all(DEF[col].map((x,i)=>{const o={...x};delete o.id;o.ord=i;return put(col,x.id,o);}));
-}
-async function resetCol(col){await Promise.all(Object.keys(D[col]).map(id=>del(col,id)));}
-const SECS=()=>items('secdefs'), CRIT=()=>items('criteria'), TOPICS=()=>items('topics'), WEEKS=()=>items('weeks'), RISKS=()=>items('risks'), PLAN=()=>items('plantext'), ROLES=()=>items('roles'), GUIDE=g=>items('guide').filter(x=>x.group===g), FLOW=()=>items('flow');
-const secBy=id=>SECS().find(s=>s.id===id);
-const L=k=>((D.meta.lists&&D.meta.lists[k])&&D.meta.lists[k].length?D.meta.lists[k]:DEFLISTS[k]);
-const proj=()=>({...DEFPROJ,...(D.meta.project||{})});
-const wkShort=w=>String(w.title||w.id).split(/[,:]/)[0];

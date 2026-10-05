@@ -10,7 +10,7 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const html = read('index.html');
 const body = html.slice(html.indexOf('<body>') + 6, html.indexOf('<!-- Optional cloud'));
 const scripts = [...html.matchAll(/<script src="(js\/[^"]+)"><\/script>/g)].map(m => m[1]);
-const fonts = html.match(/<link href="https:\/\/fonts[^>]+>/)[0];
+const fonts = '';
 const code = scripts.map(f => read(f).replace(/^'use strict';\n/, '')).join('\n').replace(/<\/script/gi, '<\\/script');
 const out = '<title>ENGG982 Hub</title>\n' + fonts + '\n<style>\n' + read('css/styles.css') + '</style>\n' + body.trim() + '\n<script>\n(function(){\n\'use strict\';\n' + code + '\n})();\n</script>\n';
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });

@@ -25,7 +25,7 @@ const ROOT = __dirname;
 const DATA = path.join(ROOT, 'data');
 const FILE = path.join(DATA, 'hub.json');
 const BK = path.join(ROOT, 'backups');
-const COLS = new Set(['sections','papers','ideas','people','tasks','contrib','inbox','slides','meta','secdefs','criteria','topics','weeks','deadlines','risks','plantext','roles','guide','flow']);
+const COLS = new Set(['units','actions','sections','papers','ideas','people','tasks','contrib','inbox','slides','meta','secdefs','criteria','topics','weeks','deadlines','risks','plantext','roles','guide','flow']);
 const ID_RE = /^[A-Za-z0-9_\-.~:@+]{1,200}$/;
 
 fs.mkdirSync(DATA, { recursive: true });
@@ -49,9 +49,9 @@ if (fs.existsSync(FILE)) {
   catch (e) { console.error('data/hub.json cannot be read (' + e.message + '). Restore a copy from the backups folder, then start again.'); process.exit(1); }
   backup();
 } else {
-  try { db = JSON.parse(fs.readFileSync(path.join(DATA, 'seed.json'), 'utf8')); } catch (e) { db = {}; }
+  db = {};
   save();
-  console.log('First run: loaded the starting data from data/seed.json');
+  console.log('First run: starting with an empty hub. The page fills in the report chapters, slides and team.');
 }
 setInterval(backup, 60 * 60 * 1000);
 
