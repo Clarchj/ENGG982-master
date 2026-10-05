@@ -8,6 +8,7 @@
   The first one that works wins. Everything else in the app is the same in all four.
 */
 const COLS=['units','actions','people','meta'];
+let VER=0;   /* bumps on every change, so cached views know to rebuild */
 const D={}; COLS.forEach(c=>{D[c]={};});
 let db=null, mode='loading';
 const W={put:async()=>{},del:async()=>{},test:async()=>{
@@ -17,13 +18,21 @@ const W={put:async()=>{},del:async()=>{},test:async()=>{
   catch(e){return [['Write and read this browser\'s storage',false,'storage is blocked in this browser']];}
 }};
 const CFG=window.HUB_CONFIG||{};
-const S={me:ls.get('hub.me')||'',lead:ss.get('hub.lead')==='1',art:'',unit:'',who:'',allDone:false};
+const S={me:ss.get('hub.me')||'',lead:ss.get('hub.lead')==='1',tab:ls.get('hub.tab')||'report',view:{report:ls.get('hub.view.report')==='board'?'board':'sections',slides:ls.get('hub.view.slides')==='board'?'board':'sections'},filt:{report:'',slides:''},open:{},who:'',allDone:false};
 
 function fail(e){toast(e&&e.code==='invalid_argument'?'Saving is not allowed for your access level.':'Could not save. Try again.');}
-async function put(col,id,obj){D[col][id]=obj;render();try{await W.put(col,id,obj);}catch(e){fail(e);}}
+async function put(col,id,obj){D[col][id]=obj;VER++;render();try{await W.put(col,id,obj);}catch(e){fail(e);}}
 async function patch(col,id,f){return put(col,id,{...(D[col][id]||{}),...f});}
-async function del(col,id){delete D[col][id];render();try{await W.del(col,id);}catch(e){fail(e);}}
-function setAll(j){COLS.forEach(c=>{D[c]=(j&&j[c])||{};});}
+async function del(col,id){delete D[col][id];VER++;render();try{await W.del(col,id);}catch(e){fail(e);}}
+function setAll(j){COLS.forEach(c=>{D[c]=(j&&j[c])||{};});VER++;}
+/* many writes at once: [[col,id,obj],...] and [[col,id],...] */
+async function batch(puts,dels){
+  puts.forEach(([c,i,o])=>{D[c][i]=o;});dels.forEach(([c,i])=>{delete D[c][i];});VER++;render();
+  try{
+    if(W.batch)await W.batch(puts,dels);
+    else{const jobs=puts.map(([c,i,o])=>()=>W.put(c,i,o)).concat(dels.map(([c,i])=>()=>W.del(c,i)));for(let k=0;k<jobs.length;k+=20)await Promise.all(jobs.slice(k,k+20).map(f=>f()));}
+  }catch(e){fail(e);}
+}
 const isEmpty=()=>COLS.every(c=>!Object.keys(D[c]).length);
 
 /* redraw without stealing focus while someone is typing */
@@ -43,6 +52,7 @@ async function tryServer(){
   try{setAll(await get());}catch(e){return false;}
   W.put=async(c,id,o)=>{const r=await fetch('api/'+c+'/'+encodeURIComponent(id),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)});if(!r.ok)throw {code:'server'};};
   W.del=async(c,id)=>{const r=await fetch('api/'+c+'/'+encodeURIComponent(id),{method:'DELETE'});if(!r.ok)throw {code:'server'};};
+  W.batch=async(puts,dels)=>{const r=await fetch('api/batch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({put:puts,del:dels})});if(!r.ok)throw {code:'server'};};
   W.test=async()=>{
     const out=[],id='_ping_'+uid(),at=new Date().toISOString();
     try{
@@ -71,6 +81,10 @@ async function tryCloud(){
   try{setAll(await get());}catch(e){return false;}
   W.put=async(c,id,o)=>{const r=await fetch(base+'?on_conflict=col,id',{method:'POST',headers:{...H,Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({col:c,id,data:o})});if(!r.ok)throw {code:'cloud'};};
   W.del=async(c,id)=>{const r=await fetch(base+'?col=eq.'+encodeURIComponent(c)+'&id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:H});if(!r.ok)throw {code:'cloud'};};
+  W.batch=async(puts,dels)=>{
+    for(let k=0;k<puts.length;k+=100){const r=await fetch(base+'?on_conflict=col,id',{method:'POST',headers:{...H,Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(puts.slice(k,k+100).map(([c,id,data])=>({col:c,id,data})))});if(!r.ok)throw {code:'cloud'};}
+    for(const [c,id] of dels)await W.del(c,id);
+  };
   W.test=async()=>{
     const out=[],id='_ping_'+uid(),at=new Date().toISOString();
     try{
@@ -100,14 +114,14 @@ async function diagCloud(){
 }
 
 async function init(){
-  loadLocal();W.put=async()=>{saveLocal();};W.del=async()=>{saveLocal();};render();
+  loadLocal();W.put=async()=>{saveLocal();};W.del=async()=>{saveLocal();};W.batch=async()=>{saveLocal();};render();
   let d=null;
   try{d=window.claude&&window.claude.use?await window.claude.use('db'):null;}catch(e){d=null;}
   if(d){
     db=d;mode='shared';COLS.forEach(c=>{D[c]={};});
     W.put=(c,id,o)=>db.doc(c+'/'+id).set(o);W.del=(c,id)=>db.doc(c+'/'+id).delete();render();
     COLS.forEach(c=>{
-      try{d.collection(c).onSnapshot(snap=>{const o={};snap.docs.forEach(x=>{o[x.id]=x.data();});D[c]=o;schedule();},e=>{console.warn(c,e&&e.code);if(e&&e.code==='revoked'){mode='local';render();}});}
+      try{d.collection(c).onSnapshot(snap=>{const o={};snap.docs.forEach(x=>{o[x.id]=x.data();});D[c]=o;VER++;schedule();},e=>{console.warn(c,e&&e.code);if(e&&e.code==='revoked'){mode='local';render();}});}
       catch(e){console.warn(e);}
     });
     setTimeout(seedCheck,1800);
@@ -118,14 +132,26 @@ async function init(){
   loadLocal();mode='local';await seedCheck();render();
 }
 
-/* First time the hub opens empty: write the report chapters, slides and team once. Ids are fixed, so doing it twice changes nothing. */
+/* First time the hub opens (or after an upgrade): load the V1.4 report's chapter and sub-section names, and the team. Ids are fixed, so doing it twice changes nothing. */
+async function importReport(){
+  if(importReport.busy)return;importReport.busy=true;
+  let R=window.REPORT_SEED;
+  if(!R){try{const r=await fetch('data/report.json',{cache:'no-store'});if(r.ok)R=await r.json();}catch(e){}}
+  if(!R){importReport.busy=false;return;}
+  /* the starter chapters and slides of the earlier version are replaced, with anything logged on them */
+  const old=Object.keys(D.units).filter(id=>/^[rs]\d+$/.test(id));
+  const dels=old.map(id=>['units',id]).concat(Object.entries(D.actions).filter(([i,a])=>old.includes(a.unit)).map(([i])=>['actions',i]));
+  const puts=R.units.map(u=>{const o={...u};delete o.id;return ['units',u.id,o];});
+  puts.push(['meta','seed',{v:2,at:Date.now()}]);
+  await batch(puts,dels);importReport.busy=false;
+}
 async function seedCheck(){
+  if(!(D.meta.seed&&D.meta.seed.v>=2)&&!D.units['r-cover'])await importReport();
   const jobs=[];
-  if(!Object.keys(D.units).length&&!D.meta.seeded){DEF.units.forEach(u=>{const o={...u};delete o.id;jobs.push(put('units',u.id,o));});}
-  if(!Object.keys(D.people).length){DEF.people.forEach(p=>{const o={...p};delete o.id;jobs.push(put('people',p.id,o));});}
-  if(!D.meta.deadlines)jobs.push(put('meta','deadlines',{text:DEF.deadlines}));
-  if(jobs.length&&!D.meta.seeded)jobs.push(put('meta','seeded',{at:Date.now()}));
-  await Promise.all(jobs);
+  if(!Object.keys(D.people).length)DEF.people.forEach(p=>{const o={...p};delete o.id;jobs.push(['people',p.id,o]);});
+  if(!D.meta.deadlines)jobs.push(['meta','deadlines',{text:DEF.deadlines}]);
+  if(!D.meta.roles)jobs.push(['meta','roles',DEF.roles]);
+  if(jobs.length)await batch(jobs,[]);
 }
 
 /* ---------- reading the data ---------- */

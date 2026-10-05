@@ -1,12 +1,14 @@
 # How the ENGG982 Hub works
 
-Two things only: the **Final Report** (one square per chapter) and the **Final Presentation** (one square per slide).
+Two artifacts: the **Final Report** (a row per chapter and sub-section, from V1.4 headings) and the **Final Presentation** (a row per slide, empty until the leader adds the first). Each has its own tab.
 
-**Teammate:** open the site, tap your name, press **+ Add action**, choose Report or Presentation, tap the chapter or slide, say what is wrong in one line, press **Log it**. Or tap a red card on the board and press **I'll fix it**. When you have fixed it, press **I fixed it**.
+**Teammate:** open the site and pick your name first. On a chapter, sub-section or slide row press the flag (flaw), pencil (change content) or plus (add content), say what and where in one line. Leave it open, or press **I'll plan it** and write a one-line plan. When the leader approves the plan, do the work in the Word file, then press **Submit work**. Sign off a whole chapter with its four check buttons (you cannot check your own writing).
 
-**Leader (Long):** tap your name and enter your PIN. Purple cards are waiting for you. Press **Approve** (the dot turns green) or **Send back**.
+**Leader (Long):** pick your name and enter your PIN. The **Approvals** tab lists everything waiting for you: **Approve plan**, then later **Approve work** (or **Send back** with a note). Only you see Approvals and Settings. Open a row and press **Edit** to rename, reorder or remove a chapter, **+ Sub-section** to add one, or the **+** square to add a chapter or slide.
 
-Colours: red = found, amber = fixing, purple = waiting for approval, green = approved. A square turns green when every action on it is approved. The percentage is the share of green squares.
+**The tutor's workflow (Workshop 10), built in:** plan first (outline, limit, writer, and a dashed square for parts that need other parts first), then write, then four checks in order: Review, Edit, Proofread, Publish. The four dots on each square show which checks are approved. Press **Our workflow** for the roles and the feedback tips. Set who is Editor, Proofreader and Publisher in Settings.
+
+Colours: red = issue, blue = plan to approve, amber = in progress, purple = work to approve, green = done. A chapter square turns green when all four checks are approved and nothing is open. The percentage is the share of approved checks across all chapters.
 
 **First time, Long only:** tap your name, choose a PIN (4 to 8 digits). Do this before you send the link to anyone. Forgot it? In Settings you can change it while signed in. If locked out, ask Claude to reset it.
 

@@ -4,10 +4,13 @@ A one-page action board for the Team 3 final report and final presentation. Plai
 
 ## What it does
 
-- Two artifacts only: the Final Report (chapters) and the Final Presentation (slides). One square each, coloured by status.
-- An action is one dot: **found (red), fixing (amber), waiting for approval (purple), approved (green)**. It moves left to right on the board, like a GitHub issue becoming a merged pull request.
-- Anyone logs an action in three taps. Only the leader (PIN) approves.
-- A timeline heatmap like GitHub's: shade is actions logged that day, a dot is an action due that day, an outline is a deadline.
+- Opens with **Who are you?** every time. Nothing shows until you pick your name. The leader also enters a PIN.
+- Three tabs: **Report**, **Presentation**, **Timeline**. The leader also gets **Approvals** (nobody else sees it) and **Settings**.
+- The report's chapters and sub-sections come from V1.4 (headings only; the text stays in the Word file). The leader can add, rename, reorder and remove chapters, sub-sections and slides.
+- Every change is an action that travels like a GitHub issue: **issue (red), plan to approve (blue), in progress (amber), work to approve (purple), done (green)**. Two gates, both the leader's: approve the plan, then approve the work.
+- Anyone can flag a flaw, ask to change content, or ask to add content on any chapter, sub-section or slide. Anyone can sign off a whole chapter on the four checks (Review, Edit, Proofread, Publish). A writer cannot check their own chapter.
+- **Sections** view lists the chapters and sub-sections. **Board** view shows the five columns.
+- A timeline heatmap like GitHub's: shade is actions logged that day, a dot is work due that day, an outline is a deadline.
 
 ## Run it
 

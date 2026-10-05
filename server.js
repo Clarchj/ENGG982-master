@@ -25,7 +25,7 @@ const ROOT = __dirname;
 const DATA = path.join(ROOT, 'data');
 const FILE = path.join(DATA, 'hub.json');
 const BK = path.join(ROOT, 'backups');
-const COLS = new Set(['units','actions','sections','papers','ideas','people','tasks','contrib','inbox','slides','meta','secdefs','criteria','topics','weeks','deadlines','risks','plantext','roles','guide','flow']);
+const COLS = new Set(['units','blocks','actions','sections','papers','ideas','people','tasks','contrib','inbox','slides','meta','secdefs','criteria','topics','weeks','deadlines','risks','plantext','roles','guide','flow']);
 const ID_RE = /^[A-Za-z0-9_\-.~:@+]{1,200}$/;
 
 fs.mkdirSync(DATA, { recursive: true });
@@ -71,13 +71,13 @@ function send(res, code, body, type, extra) {
 }
 function readBody(req, cb) {
   let n = 0; const chunks = [];
-  req.on('data', c => { n += c.length; if (n > 1e6) { req.destroy(); } else chunks.push(c); });
+  req.on('data', c => { n += c.length; if (n > 8e6) { req.destroy(); } else chunks.push(c); });
   req.on('end', () => cb(Buffer.concat(chunks).toString('utf8')));
 }
 
 /* Static files: the site itself. data/hub.json (your live data) is deliberately not served here. */
-const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.json': 'application/json' };
-const PUBLIC = /^\/(index\.html|config\.js|css\/[\w.-]+\.css|js\/[\w.-]+\.js|data\/seed\.json)$/;
+const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png' };
+const PUBLIC = /^\/(index\.html|config\.js|css\/[\w.-]+\.css|js\/[\w.-]+\.js|data\/report\.json)$/;
 function serveStatic(res, p) {
   const rel = p === '/' ? 'index.html' : p.slice(1);
   if (p !== '/' && !PUBLIC.test(p)) return false;
@@ -105,6 +105,16 @@ const server = http.createServer((req, res) => {
         let obj; try { obj = JSON.parse(text); } catch (e) { return send(res, 400, 'bad json'); }
         if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return send(res, 400, 'body must be an object');
         (db[col] = db[col] || {})[id] = obj; save(); broadcast(); send(res, 200, '{}', 'application/json');
+      });
+    }
+    if (req.method === 'POST' && p === '/api/batch') {
+      /* many writes in one request: {put:[[col,id,obj],...], del:[[col,id],...]} */
+      return readBody(req, text => {
+        let b; try { b = JSON.parse(text); } catch (e) { return send(res, 400, 'bad json'); }
+        const ok = (c, i) => COLS.has(c) && ID_RE.test(String(i));
+        for (const [c, i] of (b.del || [])) if (ok(c, i) && db[c]) delete db[c][i];
+        for (const [c, i, o] of (b.put || [])) if (ok(c, i) && o && typeof o === 'object' && !Array.isArray(o)) (db[c] = db[c] || {})[i] = o;
+        save(); broadcast(); send(res, 200, '{}', 'application/json');
       });
     }
     send(res, 404, 'Not found');
